@@ -1,0 +1,59 @@
+---
+title: "w4_assignment"
+author: ""
+date: "21/9/2021"
+output: html_document
+---
+
+Here, i am using the pacman package to load/install tidyverse and the here package.  
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+pacman::p_load(tidyverse, here)
+```
+
+Creating the vector called rooms. 
+Then i am calling plyr from the tidyverse to count the elements in the rooms vector.
+The count is then piped to the filter function to only get the elements that are equal to or above 3.
+This result is saved as a dataframe.
+Finally i am printing the sum of the freq column to get the total number of elements. 
+
+```{r}
+rooms <- c(1, 2, 1, 3, 1, NA, 3, 1, 3, 2, 1, NA, 1, 8, 3, 1, 4, NA, 1, 3, 1, 2, 1, 7, 1, NA)
+
+df <- plyr::count(rooms) %>% 
+  filter(x >= 3)
+
+print(sum(df$freq))
+```
+
+Here, i am using the base function typeof() to get the type of the rooms vector.
+It outputs that the type is a 'double' meaning that it is an integer value with no comma values (float).
+
+```{r}
+typeof(rooms)
+```
+
+Here i am using the median function on the rooms vector. 
+Initially, the output is NA because the vector includes NA's. This is always the result if it includes NA, because statistics cannot be computed on missing values. 
+In the seconf line of code i am specifying that NA's should be removed. Therefore the result is now 1.5. 
+
+```{r}
+median(rooms)
+median(rooms, na.rm = T)
+```
+
+Here i am using the download.file() function to get the safi file.
+
+```{r}
+download.file("https://ndownloader.figshare.com/files/11492171",
+              "data/SAFI_clean.csv", mode = "wb")
+```
+
+Now i am using the read_csv() function to load the csv file as the name 'interviews'.
+
+```{r}
+interviews <- read_csv('data/SAFI_clean.csv', na = 'NULL')
+```
+
